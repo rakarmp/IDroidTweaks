@@ -1,0 +1,139 @@
+#!/sbin/sh
+
+######
+# INIT
+######
+
+umask 0022
+
+# Variabel global
+TMPDIR="/dev/tmp"
+PERSISTDIR="/sbin/.magisk/mirror/persist"
+
+# Menampilkan teks sebelum memuat util_functions
+ui_print() { echo "$@"; }
+
+load_vksel() { source "$MODPATH/addon/Volume-Key-Selector/install.sh"; }
+
+rm_exist() { [[ -e "$1" ]] && rm -rf "$1" 2>/dev/null; }
+
+rm_exist "$TMPDIR"
+mkdir -p "$TMPDIR"
+
+####################
+# SETUP ENVIRONMENT
+####################
+
+OUTFD="$2"
+ZIPFILE="$3"
+
+mount /data 2>/dev/null
+
+# Memuat fungsi utilitas
+source "/data/adb/magisk/util_functions.sh"
+
+# Persiapan untuk zip yang dapat dipasang
+setup_flashable
+
+# Memasang partisi
+mount_partitions
+
+# Mendeteksi versi dan arsitektur
+api_level_arch_detect
+
+# Menyiapkan busybox dan binary
+"$BOOTMODE" && boot_actions || recovery_actions
+
+##############
+# PREPARATION
+##############
+
+# Mengekstrak file-file umum
+unzip -oj "$ZIPFILE" module.prop install.sh uninstall.sh 'common/*' -d $TMPDIR >&2
+
+# Variabel mod
+NVBASE="/data/adb"
+$BOOTMODE && MODDIRNAME=modules_update || MODDIRNAME=modules
+MODULEROOT="$NVBASE/$MODDIRNAME"
+MODID="$(grep_prop "id" "$TMPDIR/module.prop")"
+MODPATH="$MODULEROOT/$MODID"
+MODNAME="$(grep_prop "name" "$TMPDIR/module.prop")"
+
+# Membuat jalur mod
+rm_exist "$MODPATH" 2>/dev/null
+mkdir -p "$MODPATH"
+
+##############
+# INSTALLATION
+##############
+
+# Mengekstrak ke $MODPATH
+unzip -o "$ZIPFILE" -d "$MODPATH" >&2
+
+# Memuat skrip instalasi
+source "$MODPATH/setup.sh"
+
+# Menghapus semua file lama sebelum melakukan instalasi jika diinginkan
+"$CLEANSERVICE" && rm -rf "/data/adb/modules/$MODID"
+
+# Skrip mode post-fs-data
+$POSTFSDATA && cp -af $TMPDIR/post-fs-data.sh $MODPATH/post-fs-data.sh
+
+# Skrip mode service
+$LATESTARTSERVICE && cp -af $TMPDIR/service.sh $MODPATH/service.sh
+
+# File properti
+$PROPFILE && cp -af $TMPDIR/system.prop $MODPATH/system.prop
+
+# Mengaktifkan debugging jika benar
+"$DEBUG" && set -x || set +x
+
+# Menampilkan informasi mod
+info_print
+
+# Memuat otomatis vskel
+"$AUTOVKSEL" && load_vksel
+
+# Utama
+init_main
+
+# Lewati pemasangan
+"$SKIPMOUNT" && touch "$MODPATH/skip_mount"
+
+# Mengatur izin
+set_permissions
+
+# Menangani penggantian folder
+for TARGET in $REPLACE; do
+  ui_print "[*] Target penggantian: $TARGET"
+  mktouch "$MODPATH$TARGET/.replace"
+done
+
+"$BOOTMODE" && {
+  # Memperbarui informasi untuk aplikasi Magisk
+  mktouch "$NVBASE/modules/$MODID/update"
+  cp -af "$MODPATH/module.prop" "$NVBASE/modules/$MODID/module.prop"
+}
+
+# Menyalin aturan sepolicy kustom
+[[ -f "$MODPATH/sepolicy.rule" ]] && {
+  ui_print "[*] Memasang aturan sepolicy kustom..."
+  copy_sepolicy_rules
+}
+
+# Menghapus hal-hal yang tidak termasuk dalam modul
+rm -rf "$MODPATH/META-INF"
+rm -rf "$MODPATH/addon"
+rm -rf "$MODPATH/LICENSE"
+rm -rf "$MODPATH/README.md"
+rm -rf "$MODPATH/setup.sh"
+rm -rf "$MODPATH/smooth_banner"
+
+##############
+# Finalizing
+##############
+
+cd /
+"$BOOTMODE" || recovery_cleanup
+rm_exist "$TMPDIR"
+exit 0

@@ -1,0 +1,37 @@
+# ----------------------
+# This file will be read by resetprop
+# Example: Change dpi
+# ro.sf.lcd_density=320
+# ----------------------
+
+# 👌
+
+# SkiaGl
+debug.hwui.renderer=skiagl
+
+# Perf
+ro.vendor.qti.core.ctl_max_cpu=4
+ro.vendor.qti.core.ctl_min_cpu=2
+
+# Touchscreen
+touch.pressure.scale=0.001
+persist.vendor.qti.inputopts.enable=true
+persist.vendor.qti.inputopts.movetouchslop=0.6
+
+# Disable Dyn. Fps
+ro.vendor.dfps.enable=false
+ro.vendor.smart_dfps.enable=false
+
+# Wifi scaning
+wifi.supplicant_scan_interval=180
+
+# Upgrade multitasking
+MIN_HIDDEN_APPS=false
+ACTIVITY_INACTIVE_RESET_TIME=false
+MIN_RECENT_TASKS=false
+PROC_START_TIMEOUT=false
+CPU_MIN_CHECK_DURATION=false
+GC_TIMEOUT=false
+SERVICE_TIMEOUT=false
+MIN_CRASH_INTERVAL=false
+ENFORCE_PROCESS_LIMIT=false
