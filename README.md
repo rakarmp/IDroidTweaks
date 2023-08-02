@@ -66,7 +66,7 @@ This module is an improvement of the <a href="https://github.com/rakarmp/DragonB
 - Wifi scanning+
 - Upgrade multitasking
 
-[!] Report Bug&Issued <a href="t.me/Zyarexx">@Zyarexx</a> Chat On Telegram
+[!] Report Bug&Issued <a href="https://t.me/Zyarexx">@Zyarexx</a> Chat On Telegram
 
 
 
