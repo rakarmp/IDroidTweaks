@@ -1,4 +1,4 @@
-<img src="idroidtweaks.jpg" alt="idroidtweaks"/>
+<img src="idroidtweaks.png" alt="idroidtweaks"/>
 
 Optimization For Kernel And System To Get Smooth Device Like Iphone
 
@@ -67,7 +67,3 @@ This module is an improvement of the <a href="https://github.com/rakarmp/DragonB
 - Upgrade multitasking
 
 [!] Report Bug&Issued <a href="https://t.me/Zyarexx">@Zyarexx</a> Chat On Telegram
-
-
-
-
