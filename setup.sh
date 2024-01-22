@@ -8,11 +8,11 @@ LATESTARTSERVICE=true
 info_print() {
   awk '{print}' "$MODPATH"/idroidtweaks-banner
 }
-
+ 
+ 
 ui_print "----------------------------------"
-ui_print "
-█ █▀▄ █▀█ █▀█ █ █▀▄ ▀█▀ █░█░█ █▀▀ ▄▀█ █▄▀ █▀
-█ █▄▀ █▀▄ █▄█ █ █▄▀ ░█░ ▀▄▀▄▀ ██▄ █▀█ █░█ ▄█"
+ui_print "   █ █▀▄ █▀█ █▀█ █ █▀▄ ▀█▀ █░█░█ █▀▀ ▄▀█ █▄▀ █▀"
+ui_print "   █ █▄▀ █▀▄ █▄█ █ █▄▀ ░█░ ▀▄▀▄▀ ██▄ █▀█ █░█ ▄█"
 ui_print "----------------------------------"
 
 mf=$(getprop ro.boot.hardware)
@@ -35,30 +35,30 @@ version="1.0"
 
 ui_print ""
 ui_print "----------------------------------"
-ui_print "█ INFORMATION DEVICE"
+ui_print "   █ INFORMATION DEVICE"
 ui_print "----------------------------------"
-ui_print " --> Kernel: `uname -a`"
+ui_print "   --> Kernel: `uname -a`"
 sleep 0.2
-ui_print " --> Rom: $rom ($romversion)"
+ui_print "   --> Rom: $rom ($romversion)"
 sleep 0.2
-ui_print " --> Android Version: $androidRelease"
+ui_print "   --> Android Version: $androidRelease"
 sleep 0.2
-ui_print " --> Api: $api"
+ui_print "   --> Api: $api"
 sleep 0.2
-ui_print " --> SOC: $mf, $soc, $socet"
+ui_print "   --> SOC: $mf, $soc, $socet"
 sleep 0.2
-ui_print " --> CPU AArch: $aarch"
+ui_print "   --> CPU AArch: $aarch"
 sleep 0.2
-ui_print " --> Device: $dm ($device)"
+ui_print "   --> Device: $dm ($device)"
 sleep 0.2
-ui_print " --> Battery charge level: $percentage%"
+ui_print "   --> Battery charge level: $percentage%"
 sleep 0.2
-ui_print " --> Device total RAM: $memTotal MB"
+ui_print "   --> Device total RAM: $memTotal MB"
 sleep 0.2
-ui_print " --> Magisk: $magisk"
+ui_print "   --> Magisk: $magisk"
 sleep 0.2
 ui_print " "
-ui_print " --> Version tweaks: $version"
+ui_print "   --> Version tweaks: $version"
 ui_print "----------------------------------"
 ui_print ""
 
@@ -71,7 +71,7 @@ init_main() {
 
   ui_print "----------------------------------"
   ui_print ""
-  ui_print "█ EXTRACT MODULE..."
+  ui_print "   █ EXTRACT MODULE..."
   ui_print ""
   ui_print "----------------------------------"
   
@@ -81,7 +81,7 @@ init_main() {
   sleep 1.25
 
   ui_print "----------------------------------"
-  ui_print "█ DONE"
+  ui_print "   █ DONE"
   ui_print "----------------------------------"
   
   ui_print ""
@@ -94,7 +94,7 @@ init_main() {
   sleep 1
 
   ui_print "----------------------------------"
-  ui_print "█ RUNNING FSTRIM"
+  ui_print "   █ RUNNING FSTRIM"
   ui_print "----------------------------------"
   
   fstrim -v /data
@@ -102,25 +102,25 @@ init_main() {
   fstrim -v /cache
 
   ui_print "----------------------------------"
-  ui_print "█ DONE"
+  ui_print "   █ DONE"
   ui_print "----------------------------------"
 
   ui_print ""
   sleep 1.25
 
   ui_print "----------------------------------"
-  ui_print "█ ATTENTION "
+  ui_print "   █ ATTENTION "
   ui_print "----------------------------------"
   ui_print ""
-  ui_print "❗ Reboot is required"
+  ui_print "   ❗ Reboot is required"
   sleep 0.2
   ui_print ""
-  ui_print "❗ Report issues to @Zyarexx Chat on Telegram"
+  ui_print "   ❗ Report issues to @Zyarexx Chat on Telegram"
   ui_print ""
   sleep 1.5
 
   ui_print "----------------------------------"
-  ui_print "█ REBOOT TO FINISH"
+  ui_print "   █ REBOOT TO FINISH"
   ui_print "----------------------------------"
 }
 
