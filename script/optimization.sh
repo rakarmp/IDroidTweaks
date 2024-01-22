@@ -466,16 +466,15 @@ fi
 
 # Set up untuk I/O Scheduler
 for scheduler in /sys/block/*/queue; do
-    write $scheduler/scheduler "cfq"
-    write $scheduler/iostats "0"
-    write $scheduler/add_random "0"
-    write $scheduler/nomerges "2"
-    write $scheduler/rq_affinity "1"
-    write $scheduler/rotational "0"
-    write $scheduler/read_ahead_kb "128"
-    write $scheduler/nr_requests "64"
+    echo "cfq" > $scheduler/scheduler
+    echo 0 > $scheduler/iostats
+    echo 0 > $scheduler/add_random
+    echo 2 > $scheduler/nomerges
+    echo 1 > $scheduler/rq_affinity
+    echo 0 > $scheduler/rotational
+    echo 128 > $scheduler/read_ahead_kb
+    echo 64 > $scheduler/nr_requests
 done
-
 # Loop
 for loop in /sys/block/loop*/queue; do
     write $loop/scheduler "none"
@@ -483,8 +482,8 @@ done
 
 # Zram
 for zram in /sys/block/zram0/queue; do
-    write /sys/block/zram0/queue/scheduler "deadline"
-    write /sys/block/zram0/queue/read_ahead_kb "512"
+    echo "deadline" > /sys/block/zram0/queue/scheduler
+    echo 512 > /sys/block/zram0/queue/read_ahead_kb
 done
 
 # Set up untuk ioshed, disable idle
