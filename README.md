@@ -10,7 +10,7 @@ Optimization For Kernel And System To Get Smooth Device Like Iphone
 
 This module is an improvement of the <a href="https://github.com/rakarmp/DragonBoost">DragonBoost</a> module by adding many additions, see the changelog below
 
-## Changelog v1.0
+## Feature
 
 - GPU Tunning
 - Dvds & GPU Algorithm
